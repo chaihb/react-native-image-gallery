@@ -107,9 +107,9 @@ export default class TransformableImage extends PureComponent {
             return;
         }
 
-        if (source && source.uri) {
+        if (source && source.uri || source.url) {
             Image.getSize(
-                source.uri,
+                source.uri || source.url,
                 (width, height) => {
                     if (width && height) {
                         if (this.state.imageDimensions && this.state.imageDimensions.width === width && this.state.imageDimensions.height === height) {
@@ -199,8 +199,8 @@ function sameImage (source, nextSource) {
         return true;
     }
     if (source && nextSource) {
-        if (source.uri && nextSource.uri) {
-            return source.uri === nextSource.uri;
+        if ((source.uri && nextSource.uri) || (source.url && nextSource.url)) {
+            return source.uri === nextSource.uri || source.url === nextSource.url;
         }
     }
     return false;
